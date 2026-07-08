@@ -731,10 +731,9 @@
         }
 
         function updateStats() {
-            const validTimes = trialTimes.filter(t => t !== null);
-            if (validTimes.length > 0) {
-                const sum = validTimes.reduce((a, b) => a + b, 0);
-                const avg = Math.round(sum / validTimes.length);
+            if (trialTimes.length > 0) {
+                const sum = trialTimes.reduce((a, b) => a + b, 0);
+                const avg = Math.round(sum / trialTimes.length);
                 avgTimeEl.textContent = avg + ' ms';
                 roundCountEl.textContent = trialTimes.length + ' / ' + TOTAL_TRIALS;
             } else {
@@ -818,20 +817,11 @@
                     stateSub.style.display = '';
                     reactionResult.style.display = 'none';
 
-                    // Mark trial as too soon
-                    trialTimes.push(null); // null = too soon
+                    // 太快不推进进度，不计数，重试当前次
                     updateTrialDots();
-                    // Mark the dot as too-soon
-                    if (trialDots[trialTimes.length - 1]) {
-                        trialDots[trialTimes.length - 1].classList.add('too-soon-dot');
-                    }
 
                     setTimeout(() => {
-                        if (trialTimes.length >= TOTAL_TRIALS) {
-                            finishRound();
-                        } else {
-                            resetToWaiting();
-                        }
+                        resetToWaiting();
                     }, 1500);
                     break;
 
@@ -854,7 +844,7 @@
                     updateStats();
 
                     timeoutId = setTimeout(() => {
-                        if (trialTimes.filter(t => t !== null).length >= TOTAL_TRIALS) {
+                        if (trialTimes.length >= TOTAL_TRIALS) {
                             finishRound();
                         } else {
                             resetToWaiting();
@@ -889,18 +879,17 @@
             timeoutId && clearTimeout(timeoutId);
             timeoutId = null;
 
-            const validTimes = trialTimes.filter(t => t !== null);
-            if (validTimes.length === 0) {
+            if (trialTimes.length === 0) {
                 resetRound();
                 return;
             }
 
-            const sum = validTimes.reduce((a, b) => a + b, 0);
-            const avg = Math.round(sum / validTimes.length);
+            const sum = trialTimes.reduce((a, b) => a + b, 0);
+            const avg = Math.round(sum / trialTimes.length);
 
             setTestAreaState('result');
             stateText.textContent = '测试完成！';
-            stateSub.textContent = validTimes.length + '次有效反应';
+            stateSub.textContent = trialTimes.length + '次有效反应';
             stateSub.style.display = '';
             reactionResult.style.display = '';
             reactionResult.textContent = avg + ' ms';
@@ -913,18 +902,17 @@
         }
 
         function saveCurrentResult() {
-            const validTimes = trialTimes.filter(t => t !== null);
-            if (validTimes.length === 0) return;
+            if (trialTimes.length === 0) return;
 
-            const sum = validTimes.reduce((a, b) => a + b, 0);
-            const avg = Math.round(sum / validTimes.length);
-            const best = Math.min(...validTimes);
+            const sum = trialTimes.reduce((a, b) => a + b, 0);
+            const avg = Math.round(sum / trialTimes.length);
+            const best = Math.min(...trialTimes);
 
             const entry = {
                 date: new Date().toISOString(),
                 avg: avg,
                 best: best,
-                times: [...validTimes],
+                times: [...trialTimes],
                 totalTrials: trialTimes.length
             };
 
