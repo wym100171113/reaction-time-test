@@ -871,7 +871,7 @@
             stateSub.style.display = '';
             reactionResult.style.display = 'none';
             startBtn.disabled = false;
-            resetBtn.disabled = trialTimes.length > 0;
+            resetBtn.disabled = trialTimes.length === 0;
             updateTrialDots();
         }
 
