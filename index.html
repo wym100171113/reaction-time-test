@@ -485,6 +485,186 @@
             transform: scale(1.05);
         }
 
+        /* ========== Liquid Glass Effects ========== */
+        .liquid-glass {
+            backdrop-filter:
+                url(#glassRefraction) blur(0.5px) brightness(1.04) saturate(1.15) contrast(1.05);
+            -webkit-backdrop-filter:
+                url(#glassRefraction) blur(0.5px) brightness(1.04) saturate(1.15) contrast(1.05);
+            position: relative;
+        }
+
+        .liquid-glass::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            pointer-events: none;
+            background: linear-gradient(
+                135deg,
+                rgba(255,255,255,0.25) 0%,
+                rgba(255,255,255,0.05) 30%,
+                transparent 60%,
+                rgba(255,255,255,0.02) 100%
+            );
+            z-index: 1;
+        }
+
+        .dark .liquid-glass::before {
+            background: linear-gradient(
+                135deg,
+                rgba(255,255,255,0.12) 0%,
+                rgba(255,255,255,0.03) 30%,
+                transparent 60%,
+                rgba(255,255,255,0.01) 100%
+            );
+        }
+
+        .liquid-glass::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            pointer-events: none;
+            border: 0.5px solid rgba(255,255,255,0.3);
+            box-shadow:
+                inset 0 0.5px 0.5px rgba(255,255,255,0.2),
+                inset 0 -0.5px 0.5px rgba(0,0,0,0.05),
+                0 1px 3px rgba(0,0,0,0.06);
+            z-index: 2;
+        }
+
+        .dark .liquid-glass::after {
+            border-color: rgba(255,255,255,0.1);
+            box-shadow:
+                inset 0 0.5px 0.5px rgba(255,255,255,0.08),
+                inset 0 -0.5px 0.5px rgba(0,0,0,0.2),
+                0 1px 3px rgba(0,0,0,0.3);
+        }
+
+        /* Test area glass — only in idle states, colored states stay solid */
+        .test-area.liquid-glass.waiting,
+        .test-area.liquid-glass.result {
+            background: rgba(255,255,255,0.08);
+        }
+
+        .dark .test-area.liquid-glass.waiting,
+        .dark .test-area.liquid-glass.result {
+            background: rgba(255,255,255,0.04);
+        }
+
+        /* Colored states: override glass pseudo-elements */
+        .test-area.liquid-glass.ready::before,
+        .test-area.liquid-glass.go::before,
+        .test-area.liquid-glass.too-soon::before {
+            display: none;
+        }
+
+        .test-area.liquid-glass.ready::after,
+        .test-area.liquid-glass.go::after,
+        .test-area.liquid-glass.too-soon::after {
+            display: none;
+        }
+
+        .test-area.liquid-glass.ready,
+        .test-area.liquid-glass.go,
+        .test-area.liquid-glass.too-soon {
+            backdrop-filter: none;
+            -webkit-backdrop-filter: none;
+        }
+
+        .test-area.liquid-glass .state-text,
+        .test-area.liquid-glass .state-sub,
+        .test-area.liquid-glass .reaction-result {
+            position: relative;
+            z-index: 3;
+        }
+
+        .test-area.liquid-glass .trial-indicator {
+            z-index: 3;
+        }
+
+        /* Stat card glass */
+        .stat-card.liquid-glass {
+            background: rgba(255,255,255,0.06);
+        }
+
+        .dark .stat-card.liquid-glass {
+            background: rgba(255,255,255,0.04);
+        }
+
+        /* History glass */
+        .history-section.liquid-glass {
+            background: rgba(255,255,255,0.06);
+        }
+
+        .dark .history-section.liquid-glass {
+            background: rgba(255,255,255,0.04);
+        }
+
+        /* Glass buttons */
+        .btn-glass {
+            backdrop-filter:
+                url(#glassRefractionBtn) blur(0.5px) brightness(1.04) saturate(1.15) contrast(1.05);
+            -webkit-backdrop-filter:
+                url(#glassRefractionBtn) blur(0.5px) brightness(1.04) saturate(1.15) contrast(1.05);
+            background: rgba(255,255,255,0.12);
+            color: var(--text-primary);
+            border: 0.5px solid rgba(255,255,255,0.25);
+            box-shadow:
+                inset 0 0.5px 0.5px rgba(255,255,255,0.15),
+                0 1px 3px rgba(0,0,0,0.06);
+            position: relative;
+        }
+
+        .dark .btn-glass {
+            background: rgba(255,255,255,0.06);
+            border-color: rgba(255,255,255,0.1);
+            color: var(--text-primary);
+            box-shadow:
+                inset 0 0.5px 0.5px rgba(255,255,255,0.06),
+                0 1px 3px rgba(0,0,0,0.3);
+        }
+
+        .btn-glass:hover {
+            background: rgba(255,255,255,0.18);
+            box-shadow:
+                inset 0 0.5px 0.5px rgba(255,255,255,0.2),
+                0 2px 8px rgba(0,0,0,0.1);
+            transform: scale(1.02);
+        }
+
+        .dark .btn-glass:hover {
+            background: rgba(255,255,255,0.1);
+            box-shadow:
+                inset 0 0.5px 0.5px rgba(255,255,255,0.08),
+                0 2px 8px rgba(0,0,0,0.4);
+        }
+
+        .btn-glass:active {
+            transform: scale(0.98);
+        }
+
+        /* Header glass enhancement */
+        .header.liquid-glass-header {
+            background: rgba(255,255,255,0.45);
+        }
+
+        .dark .header.liquid-glass-header {
+            background: rgba(28,28,30,0.72);
+        }
+
+        /* Dark toggle glass */
+        .dark-toggle.liquid-glass {
+            background: rgba(255,255,255,0.15);
+            border-color: rgba(255,255,255,0.2);
+        }
+
+        .dark .dark-toggle.liquid-glass {
+            background: rgba(255,255,255,0.06);
+            border-color: rgba(255,255,255,0.08);
+        }
+
         /* ========== Responsive ========== */
         @media (max-width: 600px) {
             .header h1 {
@@ -524,15 +704,28 @@
     </style>
 </head>
 <body>
-    <button class="dark-toggle" id="darkToggle" title="切换深色模式">🌓</button>
-    <div class="header">
+    <!-- SVG Filters for Liquid Glass refraction -->
+    <svg style="position:absolute;width:0;height:0;pointer-events:none" aria-hidden="true">
+        <defs>
+            <filter id="glassRefraction" colorInterpolationFilters="sRGB" x="-5%" y="-5%" width="110%" height="110%">
+                <feImage id="glassMap" width="100%" height="100%" result="glassMap"/>
+                <feDisplacementMap in="SourceGraphic" in2="glassMap" scale="18" xChannelSelector="R" yChannelSelector="G"/>
+            </filter>
+            <filter id="glassRefractionBtn" colorInterpolationFilters="sRGB" x="-10%" y="-10%" width="120%" height="120%">
+                <feImage id="glassMapBtn" width="100%" height="100%" result="glassMapBtn"/>
+                <feDisplacementMap in="SourceGraphic" in2="glassMapBtn" scale="10" xChannelSelector="R" yChannelSelector="G"/>
+            </filter>
+        </defs>
+    </svg>
+    <button class="dark-toggle liquid-glass" id="darkToggle" title="切换深色模式">🌓</button>
+    <div class="header liquid-glass-header">
         <h1>REACTION TIME TEST</h1>
         <p class="subtitle">测试你的反应速度</p>
     </div>
 
     <div class="main-container">
         <!-- Test Area -->
-        <div class="test-area waiting" id="testArea">
+        <div class="test-area waiting liquid-glass" id="testArea">
             <div class="trial-indicator" id="trialIndicator">
                 <div class="trial-dot" data-idx="0"></div>
                 <div class="trial-dot" data-idx="1"></div>
@@ -547,15 +740,15 @@
 
         <!-- Stats Panel -->
         <div class="stats-panel">
-            <div class="stat-card">
+            <div class="stat-card liquid-glass">
                 <div class="stat-value" id="avgTime">-- ms</div>
                 <div class="stat-label">平均反应时间</div>
             </div>
-            <div class="stat-card">
+            <div class="stat-card liquid-glass">
                 <div class="stat-value" id="bestTime">-- ms</div>
                 <div class="stat-label">最佳成绩</div>
             </div>
-            <div class="stat-card">
+            <div class="stat-card liquid-glass">
                 <div class="stat-value" id="roundCount">0 / 5</div>
                 <div class="stat-label">本轮进度</div>
             </div>
@@ -566,22 +759,22 @@
             <div class="avg-highlight" id="saveAvg">0 ms</div>
             <p>完成5次测试！保存你的成绩以追踪进度。</p>
             <div class="btn-row">
-                <button class="btn btn-primary" id="saveBtn">保存成绩</button>
-                <button class="btn btn-secondary" id="retryBtn">重新测试</button>
+                <button class="btn btn-glass" id="saveBtn">保存成绩</button>
+                <button class="btn btn-glass" id="retryBtn">重新测试</button>
             </div>
         </div>
 
         <!-- Buttons -->
         <div class="btn-row" id="btnRow">
-            <button class="btn btn-primary" id="startBtn">开始新测试</button>
-            <button class="btn btn-secondary" id="resetBtn">重置本轮</button>
+            <button class="btn btn-glass" id="startBtn">开始新测试</button>
+            <button class="btn btn-glass" id="resetBtn">重置本轮</button>
         </div>
 
         <!-- History -->
-        <div class="history-section">
+        <div class="history-section liquid-glass">
             <h3>
                 历史记录
-                <button class="btn btn-secondary" id="clearHistoryBtn" style="font-size:0.8rem;padding:6px 14px;">清空记录</button>
+                <button class="btn btn-glass" id="clearHistoryBtn" style="font-size:0.8rem;padding:6px 14px;">清空记录</button>
             </h3>
             <div class="history-list" id="historyList">
                 <div class="history-empty">暂无记录，完成5次测试后保存</div>
@@ -704,7 +897,7 @@
 
         // ============ UI Helpers ============
         function setTestAreaState(newState) {
-            testArea.className = 'test-area ' + newState;
+            testArea.className = 'test-area ' + newState + ' liquid-glass';
             state = newState;
         }
 
@@ -1012,6 +1205,82 @@
         });
 
         clearHistoryBtn.addEventListener('click', clearHistory);
+
+        // ============ Liquid Glass Displacement Map Generator ============
+        function generateGlassDisplacementMap(feImageEl, w, h, edgeWidth, scale) {
+            const canvas = document.createElement('canvas');
+            canvas.width = w;
+            canvas.height = h;
+            const ctx = canvas.getContext('2d');
+            const data = new Uint8ClampedArray(w * h * 4);
+
+            const cx = w / 2, cy = h / 2;
+            const maxDist = Math.min(cx, cy);
+            const edgeStart = Math.max(0, 1 - edgeWidth); // 0-1, how far from edge the refraction starts
+            let maxDisp = 0;
+            const displacements = [];
+
+            for (let y = 0; y < h; y++) {
+                for (let x = 0; x < w; x++) {
+                    const nx = (x - cx) / maxDist; // normalized -1 to 1
+                    const ny = (y - cy) / maxDist;
+
+                    // Distance from center (0 at center, ~1.414 at corners)
+                    const dist = Math.sqrt(nx * nx + ny * ny);
+
+                    // Convex squircle refraction: edges magnify toward center
+                    let strength = 0;
+                    if (dist > 0.01) {
+                        // Smooth ramp from edgeStart to 1.0
+                        const t = Math.max(0, Math.min(1, (dist - edgeStart) / (1 - edgeStart)));
+                        // smoothstep for natural falloff
+                        const ss = t * t * (3 - 2 * t);
+                        strength = ss;
+                    }
+
+                    // Displacement direction: toward center
+                    const angle = Math.atan2(-ny, -nx);
+                    const dx = Math.cos(angle) * strength;
+                    const dy = Math.sin(angle) * strength;
+                    displacements.push(dx, dy);
+                    maxDisp = Math.max(maxDisp, Math.abs(dx), Math.abs(dy));
+                }
+            }
+
+            // Encode into RGBA (R=horizontal, G=vertical, 128=no displacement)
+            let idx = 0;
+            for (let y = 0; y < h; y++) {
+                for (let x = 0; x < w; x++) {
+                    const i = (y * w + x) * 4;
+                    const dx = maxDisp > 0 ? displacements[idx++] / maxDisp : 0;
+                    const dy = maxDisp > 0 ? displacements[idx++] / maxDisp : 0;
+                    data[i]     = 128 + dx * 127; // R
+                    data[i + 1] = 128 + dy * 127; // G
+                    data[i + 2] = 128;            // B (unused)
+                    data[i + 3] = 255;            // A
+                }
+            }
+
+            ctx.putImageData(new ImageData(data, w, h), 0, 0);
+            const dataUrl = canvas.toDataURL('image/png');
+            feImageEl.setAttributeNS('http://www.w3.org/1999/xlink', 'href', dataUrl);
+        }
+
+        // Generate displacement maps for glass filters
+        // Panel filter: larger, more subtle refraction
+        generateGlassDisplacementMap(
+            document.getElementById('glassMap'),
+            256, 160,  // match typical test-area aspect ratio
+            0.35,      // edge width (fraction from center)
+            18         // scale matches SVG filter
+        );
+        // Button filter: smaller, tighter refraction
+        generateGlassDisplacementMap(
+            document.getElementById('glassMapBtn'),
+            128, 48,   // match typical button aspect ratio
+            0.25,      // tighter edge
+            10         // scale matches SVG filter
+        );
 
         // ============ Start ============
         init();
